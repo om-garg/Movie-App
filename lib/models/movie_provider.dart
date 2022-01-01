@@ -17,7 +17,6 @@ class MovieData with ChangeNotifier{
   String _errorMessage = "";
   String _searchQuery = "";
   List<MovieModel> _actionMovieList = [];
-
   bool _pressed = false;
 
   final _apiKey = '65d7c73a7103c959fda2eb145872db63';
@@ -114,7 +113,7 @@ class MovieData with ChangeNotifier{
   }
 
   Future<void> get fetchTrendingData async {
-    final trendingResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/trending/all/day?api_key=$_apiKey'));
+    final trendingResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/trending/movie/day?api_key=$_apiKey'));
     _trendingMap = jsonDecode(trendingResponse.body);
     // print(_trendingMap);
 

@@ -27,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: const Color(0xff151A23),
           body: RefreshIndicator(
             onRefresh: () async {
-              context.read<MovieData>().fetchTrendingData;
-              context.read<MovieData>().fetchTrendingPersonData;
-              context.read<MovieData>().fetchTvShowsData;
+              await context.read<MovieData>().fetchTrendingData;
+              await context.read<MovieData>().fetchTrendingPersonData;
+              await context.read<MovieData>().fetchTvShowsData;
             },
             color: Colors.orangeAccent,
             backgroundColor: const Color(0xff151A23),

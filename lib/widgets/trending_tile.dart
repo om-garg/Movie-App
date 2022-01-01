@@ -61,14 +61,17 @@ class TrendingTile extends StatelessWidget {
                                 ),
                                 Positioned(
                                   left: 10,
-                                  top: 155,
-                                  child: Text(
-                                    value.trendingMap['results'][index]
-                                        ['original_title'],
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
+                                  top: 140,
+                                  child: Container(
+                                    width: 400,
+                                    child: Text(
+                                      value.trendingMap['results'][index]
+                                          ['original_title'],
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 )
                               ],
