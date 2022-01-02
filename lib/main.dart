@@ -3,7 +3,7 @@ import 'package:movie_app/models/movie_provider.dart';
 import 'package:movie_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.orangeAccent)
           ),
           debugShowCheckedModeBanner: false,
-          home: HomeScreen(),
+          home: const HomeScreen(),
         );
       }
     );

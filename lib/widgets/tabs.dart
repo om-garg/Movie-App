@@ -13,23 +13,18 @@ class Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int genre_id = 28;
-    int i = 0;
-    Provider.of<MovieData>(context).genreBasedMovie(genre);
-    if (genre == 'Action'){
-      genre_id = 28;
-    } else if (genre == 'Fantasy') {
-      genre_id = 14;
-    } else if(genre == 'Adventure') {
-      genre_id = 12;
-    } else if(genre == 'Thriller') {
-      genre_id = 53;
-    } else if(genre == 'Comedy') {
-      genre_id = 35;
-    }
+    context.read<MovieData>().actionMovieData;
+    context.read<MovieData>().fantasyMovieData;
+    context.read<MovieData>().comedyMovieData;
+    context.read<MovieData>().thrillerMovieData;
+    context.read<MovieData>().adventureMovieData;
     return Consumer<MovieData>(
       builder: (context, value, child) {
-        return value.actionMovie.isEmpty
+        return value.actionMovie.isEmpty ||
+                value.fantasyMovie.isEmpty ||
+                value.adventureMovie.isEmpty ||
+                value.comedyMovie.isEmpty ||
+                value.thrillerMovie.isEmpty
             ? const Center(
                 child: CircularProgressIndicator(
                   color: Colors.orangeAccent,
@@ -41,22 +36,54 @@ class Tabs extends StatelessWidget {
                 height: 230,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 5,
+                    itemCount: genre == 'Action'
+                        ? value.actionMovie.length
+                        : genre == 'Fantasy'
+                            ? value.fantasyMovie.length
+                            : genre == 'Adventure'
+                                ? value.adventureMovie.length
+                                : genre == 'Thriller'
+                                    ? value.thrillerMovie.length
+                                    : value.comedyMovie.length,
                     itemBuilder: (context, index) {
-                      while(i < value.movieMap['results'].length) {
-                        if(value.movieMap['results'][index]['genre_ids'].contains(genre_id)) {
-                          break;
-                        } else {
-                          index = index + 1;
-                        }
-                      }
-                      // value.movieMap['results'][index]['genre_ids'].Contain(genre_id) ? continue; : index = index + 1;
                       return MovieTile(
-                              desc: value.movieMap['results'][index]['overview'],
-                              imgUrl: value.movieMap['results'][index]['backdrop_path'] != null ? 'https://image.tmdb.org/t/p/w500${value.movieMap['results'][index]['backdrop_path']}' : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg',
-                              title: value.actionMovie[index].title,
-                              rating: value.actionMovie[index].voteAverage,
-                            );
+                        desc: genre == 'Action'
+                            ? value.actionMovie[index].description
+                            : genre == 'Fantasy'
+                                ? value.fantasyMovie[index].description
+                                : genre == 'Adventure'
+                                    ? value.adventureMovie[index].description
+                                    : genre == 'Thriller'
+                                        ? value.thrillerMovie[index].description
+                                        : value.comedyMovie[index].description,
+                        imgUrl: genre == 'Action'
+                            ? value.actionMovie[index].urlToImage
+                            : genre == 'Fantasy'
+                                ? value.fantasyMovie[index].urlToImage
+                                : genre == 'Adventure'
+                                    ? value.adventureMovie[index].urlToImage
+                                    : genre == 'Thriller'
+                                        ? value.thrillerMovie[index].urlToImage
+                                        : value.comedyMovie[index].urlToImage,
+                        title: genre == 'Action'
+                            ? value.actionMovie[index].title
+                            : genre == 'Fantasy'
+                                ? value.fantasyMovie[index].title
+                                : genre == 'Adventure'
+                                    ? value.adventureMovie[index].title
+                                    : genre == 'Thriller'
+                                        ? value.thrillerMovie[index].title
+                                        : value.comedyMovie[index].title,
+                        rating: genre == 'Action'
+                            ? value.actionMovie[index].voteAverage
+                            : genre == 'Fantasy'
+                                ? value.fantasyMovie[index].voteAverage
+                                : genre == 'Adventure'
+                                    ? value.adventureMovie[index].voteAverage
+                                    : genre == 'Thriller'
+                                        ? value.thrillerMovie[index].voteAverage
+                                        : value.comedyMovie[index].voteAverage,
+                      );
                     }),
               );
       },

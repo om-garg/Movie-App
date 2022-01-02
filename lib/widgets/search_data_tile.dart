@@ -17,15 +17,16 @@ class SearchDataTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => DetailScreen(
-              rating: voteAverage,
-              description: description,
-              imageUrl: urlToImage,
-              title: title,
-            )
-        ));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailScreen(
+                      rating: voteAverage,
+                      description: description,
+                      imageUrl: urlToImage,
+                      title: title,
+                    )));
       },
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -59,7 +60,8 @@ class SearchDataTile extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -97,18 +99,16 @@ class SearchDataTile extends StatelessWidget {
                         Text(
                           voteAverage.toString(),
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500
-                          ),
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
                         ),
                         const Text(
                           ' /10',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontWeight: FontWeight.w500
-                          ),
+                              fontWeight: FontWeight.w500),
                         ),
                       ],
                     )

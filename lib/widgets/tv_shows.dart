@@ -38,13 +38,18 @@ class TvShows extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
                               return MovieTile(
-                                  desc: value.tvShowsMap['results'][index]
-                                      ['overview'],
-                                  imgUrl: value.tvShowsMap['results'][index]['backdrop_path'] != null ?
-                                      'https://image.tmdb.org/t/p/w500${value.tvShowsMap['results'][index]['backdrop_path']}' : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg',
-                                  title: value.tvShowsMap['results'][index]
-                                      ['original_name'],
-                                rating: value.tvShowsMap['results'][index]['vote_average'].toString(),
+                                desc: value.tvShowsMap['results'][index]
+                                    ['overview'],
+                                imgUrl: value.tvShowsMap['results'][index]
+                                            ['backdrop_path'] !=
+                                        null
+                                    ? 'https://image.tmdb.org/t/p/w500${value.tvShowsMap['results'][index]['backdrop_path']}'
+                                    : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg',
+                                title: value.tvShowsMap['results'][index]
+                                    ['original_name'],
+                                rating: value.tvShowsMap['results'][index]
+                                        ['vote_average']
+                                    .toString(),
                               );
                             }),
                       ))

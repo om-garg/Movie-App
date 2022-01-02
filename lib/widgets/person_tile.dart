@@ -26,9 +26,8 @@ class PersonTile extends StatelessWidget {
           const SizedBox(
             height: 2,
           ),
-          Wrap(
-            direction: Axis.vertical,
-            children: [Text(
+          Wrap(direction: Axis.vertical, children: [
+            Text(
               name,
               style: const TextStyle(
                 color: Colors.white,
@@ -36,8 +35,8 @@ class PersonTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1,
               ),
-            ),]
-          )
+            ),
+          ])
         ],
       ),
     );

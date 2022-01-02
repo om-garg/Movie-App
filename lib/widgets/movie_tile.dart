@@ -21,18 +21,20 @@ class _MovieTileState extends State<MovieTile> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => DetailScreen(
-              rating: widget.rating,
-              description: widget.desc,
-              imageUrl: widget.imgUrl,
-              title: widget.title,
-            )
-        ));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailScreen(
+                      rating: widget.rating,
+                      description: widget.desc,
+                      imageUrl: widget.imgUrl,
+                      title: widget.title,
+                    )));
       },
       child: Padding(
         padding: const EdgeInsets.only(right: 15.0),

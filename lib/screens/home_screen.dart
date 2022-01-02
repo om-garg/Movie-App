@@ -19,8 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<MovieData>().fetchTrendingData;
     context.read<MovieData>().fetchTrendingPersonData;
     context.read<MovieData>().fetchTvShowsData;
+    context.read<MovieData>().actionMovieData;
+    context.read<MovieData>().fantasyMovieData;
+    context.read<MovieData>().comedyMovieData;
+    context.read<MovieData>().thrillerMovieData;
+    context.read<MovieData>().adventureMovieData;
     return DefaultTabController(
-      length: 8,
+      length: 5,
       child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -67,21 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? const CircularProgressIndicator()
                             : const Tabs(
                                 genre: 'Comedy',
-                              ),
-                        context.watch<MovieData>().movieDataError == true
-                            ? const CircularProgressIndicator()
-                            : const Tabs(
-                                genre: 'Documentary',
-                              ),
-                        context.watch<MovieData>().movieDataError == true
-                            ? const CircularProgressIndicator()
-                            : const Tabs(
-                                genre: 'Animation',
-                              ),
-                        context.watch<MovieData>().movieDataError == true
-                            ? const CircularProgressIndicator()
-                            : const Tabs(
-                                genre: 'Drama',
                               ),
                       ],
                     ),

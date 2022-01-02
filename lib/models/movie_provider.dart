@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/movie_model.dart';
 
-class MovieData with ChangeNotifier{
+class MovieData with ChangeNotifier {
   Map<String, dynamic> _trendingMap = {};
   Map<String, dynamic> _movieMap = {};
   Map<String, dynamic> _trendingPersonMap = {};
@@ -17,10 +17,15 @@ class MovieData with ChangeNotifier{
   String _errorMessage = "";
   String _searchQuery = "";
   List<MovieModel> _actionMovieList = [];
+  List<MovieModel> _fantasyMovieList = [];
+  List<MovieModel> _adventureMovieList = [];
+  List<MovieModel> _thrillerMovieList = [];
+  List<MovieModel> _comedyMovieList = [];
   bool _pressed = false;
 
   final _apiKey = '65d7c73a7103c959fda2eb145872db63';
-  final _readAccessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWQ3YzczYTcxMDNjOTU5ZmRhMmViMTQ1ODcyZGI2MyIsInN1YiI6IjYxY2FjN2ZiMDcyOTFjMDAxY2Y3Y2NhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.X0WFrkM8J3h3cpJY8oix-PPg4IAhjOhqMx7gbWmKzsk';
+  final _readAccessToken =
+      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWQ3YzczYTcxMDNjOTU5ZmRhMmViMTQ1ODcyZGI2MyIsInN1YiI6IjYxY2FjN2ZiMDcyOTFjMDAxY2Y3Y2NhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.X0WFrkM8J3h3cpJY8oix-PPg4IAhjOhqMx7gbWmKzsk';
 
   Map<String, dynamic> get movieMap => _movieMap;
   Map<String, dynamic> get trendingMap => _trendingMap;
@@ -37,30 +42,40 @@ class MovieData with ChangeNotifier{
   bool get pressed => _pressed;
   String get searchQuery => _searchQuery;
   List<MovieModel> get actionMovie => _actionMovieList;
+  List<MovieModel> get fantasyMovie => _fantasyMovieList;
+  List<MovieModel> get adventureMovie => _adventureMovieList;
+  List<MovieModel> get thrillerMovie => _thrillerMovieList;
+  List<MovieModel> get comedyMovie => _comedyMovieList;
 
-  void get toggle{
+  void get toggle {
     _pressed = !_pressed;
     notifyListeners();
   }
-  void blankActionMap(){
+
+  void blankActionMap() {
     _actionMovieList = [];
   }
+
   void searchMapInitial() {
+    _searchQuery = "";
     _searchMap = {};
   }
-  void query(String query){
+
+  void query(String query) {
     _searchQuery = query;
     notifyListeners();
   }
+
   Future<void> get fetchSearchData async {
-    final searchResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/search/movie?query=$_searchQuery&api_key=$_apiKey&page=2'));
+    final searchResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?query=$_searchQuery&api_key=$_apiKey&page=2'));
     _searchMap = jsonDecode(searchResponse.body);
 
-    if(searchResponse.statusCode == 200){
+    if (searchResponse.statusCode == 200) {
       try {
         _searchMap = jsonDecode(searchResponse.body);
         _searchDataError = false;
-      } catch(e) {
+      } catch (e) {
         _searchDataError = true;
         _errorMessage = e.toString();
         _searchMap = {};
@@ -73,15 +88,16 @@ class MovieData with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> genreBasedMovie(String genre) async{
-    final movieResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/search/movie?query=$genre&api_key=$_apiKey&page=2'));
+  Future<void> get actionMovieData async {
+    final movieResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?query=Action&api_key=$_apiKey&page=2'));
     _movieMap = jsonDecode(movieResponse.body);
 
-    if(movieResponse.statusCode == 200){
+    if (movieResponse.statusCode == 200) {
       try {
         _movieMap = jsonDecode(movieResponse.body);
         _movieDataError = false;
-      } catch(e) {
+      } catch (e) {
         _movieDataError = true;
         _errorMessage = e.toString();
         _movieMap = {};
@@ -92,18 +108,20 @@ class MovieData with ChangeNotifier{
       _movieMap = {};
     }
 
-    if(_movieMap == {}){
+    if (_movieMap == {}) {
       _movieDataError = true;
     } else {
-      _movieMap['results'].forEach((element){
+      _movieMap['results'].forEach((element) {
         if (element['backdrop_path'] != null &&
             element['overview'] != null &&
-            element['original_title'] != null && element['vote_average'] != null){
+            element['original_title'] != null &&
+            element['vote_average'] != null) {
           MovieModel movieModel = MovieModel(
-              title: element['original_title'],
-              description: element['overview'],
-              voteAverage: element['vote_average'].toString(),
-              urlToImage: 'https://image.tmdb.org/t/p/w500${element['backdrop_path']}',
+            title: element['original_title'],
+            description: element['overview'],
+            voteAverage: element['vote_average'].toString(),
+            urlToImage:
+                'https://image.tmdb.org/t/p/w500${element['backdrop_path']}',
           );
           _actionMovieList.add(movieModel);
         }
@@ -112,16 +130,185 @@ class MovieData with ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> get fantasyMovieData async {
+    final movieResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?query=Fantasy&api_key=$_apiKey&page=2'));
+    _movieMap = jsonDecode(movieResponse.body);
+
+    if (movieResponse.statusCode == 200) {
+      try {
+        _movieMap = jsonDecode(movieResponse.body);
+        _movieDataError = false;
+      } catch (e) {
+        _movieDataError = true;
+        _errorMessage = e.toString();
+        _movieMap = {};
+      }
+    } else {
+      _movieDataError = true;
+      _errorMessage = "Error: It could be your internet connection.";
+      _movieMap = {};
+    }
+
+    if (_movieMap == {}) {
+      _movieDataError = true;
+    } else {
+      _movieMap['results'].forEach((element) {
+        if (element['backdrop_path'] != null &&
+            element['overview'] != null &&
+            element['original_title'] != null &&
+            element['vote_average'] != null) {
+          MovieModel movieModel = MovieModel(
+            title: element['original_title'],
+            description: element['overview'],
+            voteAverage: element['vote_average'].toString(),
+            urlToImage:
+                'https://image.tmdb.org/t/p/w500${element['backdrop_path']}',
+          );
+          _fantasyMovieList.add(movieModel);
+        }
+      });
+    }
+    notifyListeners();
+  }
+
+  Future<void> get adventureMovieData async {
+    final movieResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?query=Adventure&api_key=$_apiKey&page=2'));
+    _movieMap = jsonDecode(movieResponse.body);
+
+    if (movieResponse.statusCode == 200) {
+      try {
+        _movieMap = jsonDecode(movieResponse.body);
+        _movieDataError = false;
+      } catch (e) {
+        _movieDataError = true;
+        _errorMessage = e.toString();
+        _movieMap = {};
+      }
+    } else {
+      _movieDataError = true;
+      _errorMessage = "Error: It could be your internet connection.";
+      _movieMap = {};
+    }
+
+    if (_movieMap == {}) {
+      _movieDataError = true;
+    } else {
+      _movieMap['results'].forEach((element) {
+        if (element['backdrop_path'] != null &&
+            element['overview'] != null &&
+            element['original_title'] != null &&
+            element['vote_average'] != null) {
+          MovieModel movieModel = MovieModel(
+            title: element['original_title'],
+            description: element['overview'],
+            voteAverage: element['vote_average'].toString(),
+            urlToImage:
+                'https://image.tmdb.org/t/p/w500${element['backdrop_path']}',
+          );
+          _adventureMovieList.add(movieModel);
+        }
+      });
+    }
+    notifyListeners();
+  }
+
+  Future<void> get thrillerMovieData async {
+    final movieResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?query=Thriller&api_key=$_apiKey&page=2'));
+    _movieMap = jsonDecode(movieResponse.body);
+
+    if (movieResponse.statusCode == 200) {
+      try {
+        _movieMap = jsonDecode(movieResponse.body);
+        _movieDataError = false;
+      } catch (e) {
+        _movieDataError = true;
+        _errorMessage = e.toString();
+        _movieMap = {};
+      }
+    } else {
+      _movieDataError = true;
+      _errorMessage = "Error: It could be your internet connection.";
+      _movieMap = {};
+    }
+
+    if (_movieMap == {}) {
+      _movieDataError = true;
+    } else {
+      _movieMap['results'].forEach((element) {
+        if (element['backdrop_path'] != null &&
+            element['overview'] != null &&
+            element['original_title'] != null &&
+            element['vote_average'] != null) {
+          MovieModel movieModel = MovieModel(
+            title: element['original_title'],
+            description: element['overview'],
+            voteAverage: element['vote_average'].toString(),
+            urlToImage:
+                'https://image.tmdb.org/t/p/w500${element['backdrop_path']}',
+          );
+          _thrillerMovieList.add(movieModel);
+        }
+      });
+    }
+    notifyListeners();
+  }
+
+  Future<void> get comedyMovieData async {
+    final movieResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/search/movie?query=Comedy&api_key=$_apiKey&page=2'));
+    _movieMap = jsonDecode(movieResponse.body);
+
+    if (movieResponse.statusCode == 200) {
+      try {
+        _movieMap = jsonDecode(movieResponse.body);
+        _movieDataError = false;
+      } catch (e) {
+        _movieDataError = true;
+        _errorMessage = e.toString();
+        _movieMap = {};
+      }
+    } else {
+      _movieDataError = true;
+      _errorMessage = "Error: It could be your internet connection.";
+      _movieMap = {};
+    }
+
+    if (_movieMap == {}) {
+      _movieDataError = true;
+    } else {
+      _movieMap['results'].forEach((element) {
+        if (element['backdrop_path'] != null &&
+            element['overview'] != null &&
+            element['original_title'] != null &&
+            element['vote_average'] != null) {
+          MovieModel movieModel = MovieModel(
+            title: element['original_title'],
+            description: element['overview'],
+            voteAverage: element['vote_average'].toString(),
+            urlToImage:
+                'https://image.tmdb.org/t/p/original${element['backdrop_path']}',
+          );
+          _comedyMovieList.add(movieModel);
+        }
+      });
+    }
+    notifyListeners();
+  }
+
   Future<void> get fetchTrendingData async {
-    final trendingResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/trending/movie/day?api_key=$_apiKey'));
+    final trendingResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/trending/movie/day?api_key=$_apiKey'));
     _trendingMap = jsonDecode(trendingResponse.body);
     // print(_trendingMap);
 
-    if(trendingResponse.statusCode == 200){
+    if (trendingResponse.statusCode == 200) {
       try {
         _trendingMap = jsonDecode(trendingResponse.body);
         _trendingDataError = false;
-      } catch(e) {
+      } catch (e) {
         _trendingDataError = true;
         _errorMessage = e.toString();
         _trendingMap = {};
@@ -135,15 +322,16 @@ class MovieData with ChangeNotifier{
   }
 
   Future<void> get fetchTrendingPersonData async {
-    final trendingPersonsResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/trending/person/day?api_key=$_apiKey'));
+    final trendingPersonsResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/trending/person/day?api_key=$_apiKey'));
     _trendingPersonMap = jsonDecode(trendingPersonsResponse.body);
     // print(_trendingPersonMap);
 
-    if(trendingPersonsResponse.statusCode == 200){
+    if (trendingPersonsResponse.statusCode == 200) {
       try {
         _trendingPersonMap = jsonDecode(trendingPersonsResponse.body);
         _trendingPersonDataError = false;
-      } catch(e) {
+      } catch (e) {
         _trendingPersonDataError = true;
         _errorMessage = e.toString();
         _trendingPersonMap = {};
@@ -157,15 +345,16 @@ class MovieData with ChangeNotifier{
   }
 
   Future<void> get fetchTvShowsData async {
-    final tvShowsResponse = await http.get(Uri.parse('https://api.themoviedb.org/3/trending/tv/day?api_key=$_apiKey'));
+    final tvShowsResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/trending/tv/day?api_key=$_apiKey'));
     _tvShowsMap = jsonDecode(tvShowsResponse.body);
     // print(_tvShowsMap);
 
-    if(tvShowsResponse.statusCode == 200){
+    if (tvShowsResponse.statusCode == 200) {
       try {
         _tvShowsMap = jsonDecode(tvShowsResponse.body);
         _tvShowDataError = false;
-      } catch(e) {
+      } catch (e) {
         _tvShowDataError = true;
         _errorMessage = e.toString();
         _tvShowsMap = {};

@@ -27,8 +27,8 @@ class TrendingPeopleList extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.w600),
                   ),
-                  const SizedBox(
-                    height: 5,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   Expanded(
                     flex: 1,

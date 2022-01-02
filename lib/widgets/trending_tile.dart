@@ -28,15 +28,21 @@ class TrendingTile extends StatelessWidget {
                   itemCount: 8,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
-                            context, MaterialPageRoute(
-                            builder: (context) => DetailScreen(
-                              rating: value.trendingMap['results'][index]['vote_average'].toString(),
-                              imageUrl: value.trendingMap['results'][index]['backdrop_path'],
-                              title: value.trendingMap['results'][index]['original_title'],
-                              description: value.trendingMap['results'][index]['overview'],
-                            )));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DetailScreen(
+                                      rating: value.trendingMap['results']
+                                              [index]['vote_average']
+                                          .toString(),
+                                      imageUrl: value.trendingMap['results']
+                                          [index]['backdrop_path'],
+                                      title: value.trendingMap['results'][index]
+                                          ['original_title'],
+                                      description: value.trendingMap['results']
+                                          [index]['overview'],
+                                    )));
                       },
                       child: Stack(
                         children: [
@@ -44,8 +50,12 @@ class TrendingTile extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               image: DecorationImage(
-                                  image: NetworkImage( value.trendingMap['results'][index]['backdrop_path'] != null ?
-                                      "https://image.tmdb.org/t/p/w500${value.trendingMap['results'][index]['backdrop_path']}" : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg'),
+                                  image: NetworkImage(value
+                                                  .trendingMap['results'][index]
+                                              ['backdrop_path'] !=
+                                          null
+                                      ? "https://image.tmdb.org/t/p/w500${value.trendingMap['results'][index]['backdrop_path']}"
+                                      : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg'),
                                   fit: BoxFit.cover),
                             ),
                           ),

@@ -39,8 +39,9 @@ class CustomAppBar extends StatelessWidget {
                       onTap: () {
                         value.query(searchController.text);
                         Navigator.push(
-                          context, MaterialPageRoute(
-                              builder: (context) => const SearchScreen()));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchScreen()));
                       },
                       onBack: () {
                         value.toggle;
@@ -114,27 +115,6 @@ class CustomAppBar extends StatelessWidget {
                     ),
                     Text(
                       "Comedy",
-                      style: TextStyle(
-                        fontFamily: 'Overpass',
-                        fontSize: 17,
-                      ),
-                    ),
-                    Text(
-                      "Documentary",
-                      style: TextStyle(
-                        fontFamily: 'Overpass',
-                        fontSize: 17,
-                      ),
-                    ),
-                    Text(
-                      "Animation",
-                      style: TextStyle(
-                        fontFamily: 'Overpass',
-                        fontSize: 17,
-                      ),
-                    ),
-                    Text(
-                      "Drama",
                       style: TextStyle(
                         fontFamily: 'Overpass',
                         fontSize: 17,

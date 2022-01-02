@@ -27,13 +27,13 @@ class DetailScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage( imageUrl != null ?
-                        'https://image.tmdb.org/t/p/original$imageUrl' : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg'))),
+                    image: NetworkImage(imageUrl != null
+                        ? 'https://image.tmdb.org/t/p/original$imageUrl'
+                        : 'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie-1-3.jpg'))),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
               child: Container(
-                decoration:
-                    BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
               ),
             ),
           ),
@@ -101,20 +101,17 @@ class DetailScreen extends StatelessWidget {
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500
-                                ),
+                                    fontWeight: FontWeight.w500),
                               ),
                               const Text(
                                 ' /10',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15,
-                                    fontWeight: FontWeight.w500
-                                ),
+                                    fontWeight: FontWeight.w500),
                               ),
                             ],
                           )
-
                         ],
                       ),
                     ),
