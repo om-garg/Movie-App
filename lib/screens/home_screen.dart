@@ -19,11 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<MovieData>().fetchTrendingData;
     context.read<MovieData>().fetchTrendingPersonData;
     context.read<MovieData>().fetchTvShowsData;
-    context.read<MovieData>().actionMovieData;
-    context.read<MovieData>().fantasyMovieData;
-    context.read<MovieData>().comedyMovieData;
-    context.read<MovieData>().thrillerMovieData;
-    context.read<MovieData>().adventureMovieData;
     return DefaultTabController(
       length: 5,
       child: SafeArea(
@@ -35,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
               await context.read<MovieData>().fetchTrendingData;
               await context.read<MovieData>().fetchTrendingPersonData;
               await context.read<MovieData>().fetchTvShowsData;
+              await context.read<MovieData>().actionMovieData;
+              await context.read<MovieData>().fantasyMovieData;
+              await context.read<MovieData>().comedyMovieData;
+              await context.read<MovieData>().thrillerMovieData;
+              await context.read<MovieData>().adventureMovieData;
             },
             color: Colors.orangeAccent,
             backgroundColor: const Color(0xff151A23),
